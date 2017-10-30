@@ -13,12 +13,12 @@ import time
 
 GPIO.setmode(GPIO.BOARD)
 
-trig=33
-echo=31
+trig = 33
+echo = 31
 
 # ultrasonic sensor setting
-GPIO.setup(trig,GPIO.OUT)
-GPIO.setup(echo,GPIO.IN)
+GPIO.setup(trig, GPIO.OUT)
+GPIO.setup(echo, GPIO.IN)
 
 
 def getDistance():

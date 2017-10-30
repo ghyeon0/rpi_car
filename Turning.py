@@ -1,6 +1,6 @@
 ######################################################################
 ### Date: 2017/10/5
-### file name: TurnModule.py
+### file name: Turning.py
 ### Purpose: this code has been generated for the three-wheeled moving
 ###         object to perform swing turn and point turn
 ### this code is used for the student only
@@ -94,6 +94,7 @@ def rightmotor(x):
 # are output pin or input pin
 # =======================================================================
 
+
 GPIO.setup(MotorLeft_A,GPIO.OUT)
 GPIO.setup(MotorLeft_B,GPIO.OUT)
 GPIO.setup(MotorLeft_PWM,GPIO.OUT)
@@ -113,16 +114,18 @@ GPIO.setup(MotorRight_PWM,GPIO.OUT)
 # =======================================================================
 # create left pwm object to control the speed of left motor
 # =======================================================================
-LeftPwm=GPIO.PWM(MotorLeft_PWM,100)
+LeftPwm = GPIO.PWM(MotorLeft_PWM,100)
 
 # =======================================================================
 # create right pwm object to control the speed of right motor
 # =======================================================================
-RightPwm=GPIO.PWM(MotorRight_PWM,100) 
+RightPwm = GPIO.PWM(MotorRight_PWM,100)
 
 # =======================================================================
 # perform right swing turn of 90 degree  
 # =======================================================================
+
+
 def rightSwingTurn(speed, running_time):
     # set the right motor pwm to be ready to stop
     # Turn Off Right PWM
@@ -213,33 +216,6 @@ def stop():
     LeftPwm.ChangeDutyCycle(0)
     RightPwm.ChangeDutyCycle(0)
 
-
-def temp_stop():
-    LeftPwm.ChangeDutyCycle(0)
-    RightPwm.ChangeDutyCycle(0)
-
-
-def leftPointTurn2(speed, running_time):
-    leftmotor(backward0)
-    rightmotor(forward0)
-    for i in range(10):
-        GPIO.output(MotorLeft_PWM, GPIO.HIGH)
-        GPIO.output(MotorRight_PWM, GPIO.HIGH)
-        LeftPwm.ChangeDutyCycle(speed)
-        RightPwm.ChangeDutyCycle(speed)
-        time.sleep(running_time * 0.1)
-        stop()
-
-def rightPointTurn2(speed, running_time):
-    leftmotor(forward0)
-    rightmotor(backward0)
-    for i in range(10):
-        GPIO.output(MotorLeft_PWM, GPIO.HIGH)
-        GPIO.output(MotorRight_PWM, GPIO.HIGH)
-        LeftPwm.ChangeDutyCycle(speed)
-        RightPwm.ChangeDutyCycle(speed)
-        time.sleep(running_time * 0.1)
-        stop()
 
 if __name__ == "__main__":
     leftPointTurn2(80, 2)

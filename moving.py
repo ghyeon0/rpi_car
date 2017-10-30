@@ -1,14 +1,14 @@
 ######################################################################
 ### Date: 2017/10/5
-### file name: go_any.py
+### file name: moving.py
 ### Purpose: this code has been generated for the three-wheeled moving
 ###         objectt to go forward or backward without time limit
 ######################################################################
 
 # import GPIO library
 import RPi.GPIO as GPIO
-from ultraModule import getDistance
-from time import sleep
+import UltraSensor
+import time
 
 # set GPIO warnings as flase
 GPIO.setwarnings(False)
@@ -140,7 +140,7 @@ def go_forward_any(speed):
     rightmotor(forward1)
     GPIO.output(MotorRight_PWM, GPIO.HIGH)
     while 1:
-        distance = getDistance()
+        distance = UltraSensor.getDistance()
         if distance < dis:
             break
         LeftPwm.ChangeDutyCycle(speed)
@@ -178,7 +178,7 @@ def go_forward(speed, running_time):
     GPIO.output(MotorRight_PWM, GPIO.HIGH)
     LeftPwm.ChangeDutyCycle(speed)
     RightPwm.ChangeDutyCycle(speed)
-    sleep(running_time)
+    time.sleep(running_time)
 
 # student assignment (6)
 
@@ -195,7 +195,7 @@ def go_backward(speed, running_time):
     GPIO.output(MotorRight_PWM, GPIO.HIGH)
     LeftPwm.ChangeDutyCycle(speed)
     RightPwm.ChangeDutyCycle(speed)
-    sleep(running_time)
+    time.sleep(running_time)
 
 
 # student assignment (7)

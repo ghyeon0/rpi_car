@@ -11,7 +11,7 @@
 # import GPIO library and time module
 # =======================================================================
 import RPi.GPIO as GPIO
-from time import sleep
+import time
 
 # =======================================================================
 #  set GPIO warnings as false
@@ -19,14 +19,14 @@ from time import sleep
 GPIO.setwarnings(False)
 
 # =======================================================================
-# import getDistance() method in the ultraModule
+# import UltraSensor.getDistance() method in the ultraModule
 # =======================================================================
-from ultraModule import getDistance
+import UltraSensor
 
 # =======================================================================
 # import TurnModule() method
 # =======================================================================
-from TurnModule import *
+import Turning
 
 
 # =======================================================================
@@ -41,7 +41,7 @@ from TurnModule import *
 # import go_forward_any(), go_backward_any(), stop(), LeftPwm(),
 # RightPwm(), pwm_setup(), and pwm_low() methods in the module of go_any
 # =======================================================================
-from go_any import *
+import moving
 
 # implement rightmotor(x)  # student assignment (3)
 # implement go_forward_any(speed): # student assignment (4)
@@ -77,29 +77,31 @@ obstacle = 1
 
 
 try:
-    distance = getDistance()
+    distance = UltraSensor.getDistance()
     while True:
-        distance = getDistance()
+        distance = UltraSensor.getDistance()
         # ultra sensor replies the distance back
         print('distance= ', distance)
+        print('obstacle= ', obstacle)
 
         # when the distance is above the dis, moving object forwards
-        if (distance > dis):
-            go_forward_any(85)
+        if distance > dis:
+            moving.go_forward_any(85)
 
         # when the distance is below the dis, moving object stops
         else:
             # stop and wait 1 second
-            stop()
-            sleep(1)
+            print('obstacle= ', obstacle)
+            moving.stop()
+            time.sleep(1)
             if obstacle == 1:
-                rightSwingTurn(Swing_Right_Speed, Swing_Right_Time)
+                Turning.rightSwingTurn(Swing_Right_Speed, Swing_Right_Time)
             elif obstacle == 2:
-                rightPointTurn(Point_Right_Speed, Point_Right_Time)
+                Turning.rightPointTurn(Point_Right_Speed, Point_Right_Time)
             elif obstacle == 3:
-                leftPointTurn(Point_Left_Speed, Point_Left_Time)
+                Turning.leftPointTurn(Point_Left_Speed, Point_Left_Time)
             else:
-                leftSwingTurn(Swing_Left_Speed, Swing_Left_Time)
+                Turning.leftSwingTurn(Swing_Left_Speed, Swing_Left_Time)
             obstacle += 1
             ########################################################
             ### please continue the code or change the above code
@@ -111,4 +113,4 @@ try:
 # the moving object will be stopped
 
 except KeyboardInterrupt:
-    pwm_low()
+    moving.pwm_low()
